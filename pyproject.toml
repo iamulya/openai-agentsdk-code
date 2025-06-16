@@ -1,0 +1,37 @@
+[project]
+name = "openai-agentsdk-code"
+version = "1.0.0"
+description = "Companion code examples for the book 'Building Intelligent Workflows: A Deep Dive into the OpenAI Agents SDK'."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Amulya Bhatia", email = "amulya.bhatia@t-online.de" }]
+
+dependencies = [
+    # Core SDK with optional dependencies for voice and litellm
+    "openai-agents[voice,litellm]",
+
+    # Pydantic is crucial for defining structured outputs and data models
+    "pydantic>=2.10, <3",
+
+    # For audio playback in voice examples
+    "sounddevice",
+
+    # For loading environment variables from a .env file
+    "python-dotenv",
+]
+
+[project.urls]
+Homepage = "https://github.com/iamulya/openai-agentsdk-code"
+Repository = "https://github.com/iamulya/openai-agentsdk-code"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"} # Tells setuptools that packages are under the "src" directory
+
+[tool.setuptools.packages.find]
+where = ["src"]  # Location of packages relative to pyproject.toml
+include = ["building_intelligent_agents", "building_intelligent_agents.*"] # Packages to include
