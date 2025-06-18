@@ -6,7 +6,7 @@ async def main():
     haiku_agent = Agent(
         name="Haiku Poet",
         instructions="You are a poetic assistant who only responds in haikus (5-7-5 syllables).",
-        model="litellm/gemini/gemini-1.5-flash-latest" # Using the 'litellm/' prefix
+        model="litellm/gemini/gemini-2.0-flash" # Using the 'litellm/' prefix
     )
 
     # Use the Runner to execute the agent

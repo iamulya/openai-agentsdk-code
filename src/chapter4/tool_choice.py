@@ -1,6 +1,4 @@
 import asyncio
-import os
-from openai.types.shared import Reasoning
 from agents import Agent, Runner, function_tool, ModelSettings
 
 # --- Tool Definitions ---
@@ -22,8 +20,6 @@ async def authenticate_user(user_id: str) -> str:
 
 # --- Agent Definition ---
 async def main():
-    if not os.getenv("GOOGLE_API_KEY"):
-        raise ValueError("Please set the GOOGLE_API_KEY environment variable.")
 
     orchestrator_agent = Agent(
         name="Workflow Orchestrator",
@@ -33,7 +29,6 @@ async def main():
         model_settings=ModelSettings(
             tool_choice="required",            # Must call tools on the first turn
             parallel_tool_calls=True,          # Encourage concurrent tool calls
-            reasoning=Reasoning(effort="low")  # Ask for chain-of-thought
         )
     )
 
@@ -43,12 +38,7 @@ async def main():
         "Prepare the system for user 'alex-456'."
     )
 
-    print("\n--- Reasoning Steps from the Agent ---")
-    reasoning_steps = [item.raw_item.reasoning for item in result.new_items if item.type == "reasoning_item"]
-    for i, step in enumerate(reasoning_steps):
-        print(f"Step {i+1}: {step}")
-
-    print(f"\n--- Final Output ---")
+    print("\n--- Final Output ---")
     print(result.final_output)
 
 if __name__ == "__main__":

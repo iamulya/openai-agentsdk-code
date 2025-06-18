@@ -80,6 +80,7 @@ async def update_seat(
 
 async def on_seat_booking_handoff(context: RunContextWrapper[AirlineAgentContext]) -> None:
     flight_number = f"FLT-{random.randint(100, 999)}"
+    print(f"[Handoff Hook]: Assigning flight number {flight_number} to context.")
     context.context.flight_number = flight_number
 
 
@@ -96,6 +97,7 @@ faq_agent = Agent[AirlineAgentContext](
     2. Use the faq lookup tool to answer the question. Do not rely on your own knowledge.
     3. If you cannot answer the question, transfer back to the triage agent.""",
     tools=[faq_lookup_tool],
+    model="litellm/gemini/gemini-2.0-flash",
 )
 
 seat_booking_agent = Agent[AirlineAgentContext](
@@ -110,6 +112,7 @@ seat_booking_agent = Agent[AirlineAgentContext](
     3. Use the update seat tool to update the seat on the flight.
     If the customer asks a question that is not related to the routine, transfer back to the triage agent. """,
     tools=[update_seat],
+    model="litellm/gemini/gemini-2.0-flash",
 )
 
 triage_agent = Agent[AirlineAgentContext](
@@ -123,6 +126,7 @@ triage_agent = Agent[AirlineAgentContext](
         faq_agent,
         handoff(agent=seat_booking_agent, on_handoff=on_seat_booking_handoff),
     ],
+    model="litellm/gemini/gemini-2.0-flash",
 )
 
 faq_agent.handoffs.append(triage_agent)
@@ -142,7 +146,7 @@ async def main():
     conversation_id = uuid.uuid4().hex[:16]
 
     while True:
-        user_input = input("Enter your message: ")
+        user_input = input(">: ")
         with trace("Customer service", group_id=conversation_id):
             input_items.append({"content": user_input, "role": "user"})
             result = await Runner.run(current_agent, input_items, context=context)

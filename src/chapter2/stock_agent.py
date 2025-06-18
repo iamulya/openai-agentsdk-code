@@ -26,7 +26,7 @@ def main():
     financial_agent = Agent(
         name="Financial Assistant",
         instructions="You are a financial assistant. Use your tools to answer questions. Be concise.",
-        model="litellm/gemini/gemini-1.5-flash-latest",
+        model="litellm/gemini/gemini-2.0-flash",
         tools=[get_stock_price] # The tool is passed in a list
     )
 

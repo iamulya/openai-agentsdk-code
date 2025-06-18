@@ -22,7 +22,7 @@ def main():
         {json.dumps(UserProfile.model_json_schema(), indent=2)}
         ```
         """,
-        model="litellm/gemini/gemini-1.5-flash-latest"
+        model="litellm/gemini/gemini-2.0-flash"
     )
 
     # After running, you would need to manually parse the `result.final_output` string

@@ -2,8 +2,6 @@
 # A deterministic chain: Brainstormer -> Writer
 #
 
-import asyncio
-import os
 from pydantic import BaseModel, Field
 from agents import Agent, Runner, trace
 
@@ -11,14 +9,12 @@ class BlogIdeas(BaseModel):
     ideas: list[str] = Field(description="A list of three creative blog post titles.")
 
 def main():
-    if not os.getenv("GOOGLE_API_KEY"):
-        raise ValueError("Please set the GOOGLE_API_KEY environment variable.")
 
     # 1. Define the first agent in the chain
     brainstormer_agent = Agent(
         name="Brainstormer",
         instructions="You are an expert idea generator. Generate creative blog post titles based on the user's topic.",
-        model="litellm/gemini/gemini-1.5-flash-latest",
+        model="litellm/gemini/gemini-2.0-flash",
         output_type=BlogIdeas # We use a structured output
     )
 
@@ -26,7 +22,7 @@ def main():
     writer_agent = Agent(
         name="Writer",
         instructions="You are a professional writer. Write a short, engaging blog post (2-3 paragraphs) based on the provided title.",
-        model="litellm/gemini/gemini-1.5-pro-latest" # Using a more powerful model for writing
+        model="litellm/gemini/gemini-2.0-flash" 
     )
 
     # --- Code-driven Orchestration ---

@@ -1,6 +1,3 @@
-import asyncio
-import os
-import random
 from dataclasses import dataclass
 from typing import Literal
 from agents import Agent, Runner, RunContextWrapper
@@ -28,12 +25,10 @@ def get_moody_instructions(
 moody_agent = Agent[AgentContext](
     name="Moody Assistant",
     instructions=get_moody_instructions, # Pass the function, not its result
-    model="litellm/gemini/gemini-1.5-flash-latest"
+    model="litellm/gemini/gemini-2.0-flash"
 )
 
 def main():
-    if not os.getenv("GOOGLE_API_KEY"):
-        raise ValueError("Please set the GOOGLE_API_KEY environment variable.")
 
     # Run the agent with different moods
     for mood in ["happy", "grumpy", "poetic"]:

@@ -1,6 +1,5 @@
-import asyncio
-import os
-from agents import Agent, Runner, function_tool, RunContextWrapper
+from agents import Agent, Runner, function_tool, RunContextWrapper, ModelSettings
+
 
 def custom_error_handler(ctx: RunContextWrapper, error: Exception) -> str:
     """A custom function to format error messages for the LLM."""
@@ -10,19 +9,21 @@ def custom_error_handler(ctx: RunContextWrapper, error: Exception) -> str:
 @function_tool(failure_error_function=custom_error_handler)
 def divide(a: float, b: float) -> float:
     """Divides the first number by the second number."""
+    print(f"[Tool Executed]: Dividing {a} by {b}")
     if b == 0:
         raise ValueError("Cannot divide by zero.")
     return a / b
 
 def main():
-    if not os.getenv("GOOGLE_API_KEY"):
-        raise ValueError("Please set the GOOGLE_API_KEY environment variable.")
 
     error_handling_agent = Agent(
         name="Error Handling Agent",
-        instructions="Perform the division. If an error occurs, explain it to the user.",
-        model="litellm/gemini/gemini-1.5-flash-latest",
-        tools=[divide]
+        instructions="Perform the division using the divide tool. If an error occurs, explain it to the user.",
+        model="litellm/gemini/gemini-2.0-flash",
+        tools=[divide],
+        model_settings=ModelSettings(
+            tool_choice="required",            # Must call tools on the first turn
+        )
     )
 
     # This will trigger the failure_error_function

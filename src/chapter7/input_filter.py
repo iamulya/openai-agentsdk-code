@@ -1,5 +1,3 @@
-import asyncio
-import os
 from agents import Agent, Runner, handoff, function_tool
 from agents.extensions import handoff_filters
 
@@ -12,14 +10,14 @@ def check_system_status() -> str:
 faq_agent = Agent(
     name="FAQ Agent",
     instructions="Answer questions concisely. Do not comment on your tools or previous turns.",
-    model="litellm/gemini/gemini-1.5-flash-latest"
+    model="litellm/gemini/gemini-2.0-flash"
 )
 
 # Triage agent has a tool and a handoff with a filter
 triage_agent = Agent(
     name="Triage Agent",
     instructions="Use your tool to check status, or handoff to the FAQ agent.",
-    model="litellm/gemini/gemini-1.5-flash-latest",
+    model="litellm/gemini/gemini-2.0-flash",
     tools=[check_system_status],
     handoffs=[
         handoff(
@@ -30,8 +28,6 @@ triage_agent = Agent(
 )
 
 def main():
-    if not os.getenv("GOOGLE_API_KEY"):
-        raise ValueError("Please set the GOOGLE_API_KEY environment variable.")
 
     # 1. First, call the tool on the triage agent
     result1 = Runner.run_sync(triage_agent, "First, check the system status.")

@@ -1,15 +1,12 @@
 import asyncio
-import os
-from agents import Agent, Runner, trace, ItemHelpers, TResponseInputItem
+from agents import Agent, Runner, trace, TResponseInputItem
 
 async def main():
-    if not os.getenv("GOOGLE_API_KEY") or not os.getenv("OPENAI_API_KEY"):
-        raise ValueError("Please set both GOOGLE_API_KEY and OPENAI_API_KEY.")
 
     concise_agent = Agent(
         name="Concise Agent",
         instructions="You are extremely concise. Respond in 20 words or less.",
-        model="litellm/gemini/gemini-1.5-flash-latest",
+        model="litellm/gemini/gemini-2.0-flash",
     )
 
     # Wrap multiple Runner calls in a single trace

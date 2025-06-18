@@ -1,11 +1,6 @@
 import asyncio
 import litellm
 
-# --- Setup ---
-# Ensure you have litellm installed: pip install litellm
-# Set your Google API key: export GOOGLE_API_KEY="your-key-here"
-# ----------------
-
 async def get_haiku(topic: str):
     """Generates a haiku using a direct LLM call."""
 
@@ -16,7 +11,7 @@ async def get_haiku(topic: str):
 
     # Direct call to the model
     response = await litellm.acompletion(
-        model="gemini/gemini-1.5-flash-latest",
+        model="gemini/gemini-2.0-flash",
         messages=messages,
         temperature=0.5
     )

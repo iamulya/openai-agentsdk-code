@@ -8,8 +8,8 @@ license = { text = "MIT" }
 authors = [{ name = "Amulya Bhatia", email = "amulya.bhatia@t-online.de" }]
 
 dependencies = [
-    # Core SDK with optional dependencies for voice and litellm
-    "openai-agents[voice,litellm]",
+    # Core SDK with optional dependencies for voice, viz and litellm
+    "openai-agents[voice,litellm,viz]",
 
     # Pydantic is crucial for defining structured outputs and data models
     "pydantic>=2.10, <3",

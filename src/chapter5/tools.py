@@ -1,5 +1,3 @@
-import asyncio
-import os
 from agents import Agent, Runner, function_tool
 
 # 1. Define a regular Python function and decorate it
@@ -16,14 +14,12 @@ def add(a: int, b: int) -> int:
     return a + b
 
 def main():
-    if not os.getenv("GOOGLE_API_KEY"):
-        raise ValueError("Please set the GOOGLE_API_KEY environment variable.")
 
     # 2. Create an agent and give it the tool
     calculator_agent = Agent(
         name="Calculator Agent",
         instructions="You are a calculator. Use your tools to perform calculations.",
-        model="litellm/gemini/gemini-1.5-flash-latest",
+        model="litellm/gemini/gemini-2.0-flash",
         tools=[add] # Pass the decorated function directly
     )
 

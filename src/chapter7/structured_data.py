@@ -1,5 +1,3 @@
-import asyncio
-import os
 from pydantic import BaseModel, Field
 from agents import Agent, Runner, handoff, RunContextWrapper
 
@@ -21,7 +19,7 @@ human_support_agent = Agent(name="Human Support Team", instructions="...")
 triage_agent = Agent(
     name="Triage Agent",
     instructions="You are an AI assistant. If you cannot resolve the issue, escalate to a human.",
-    model="litellm/gemini/gemini-1.5-flash-latest",
+    model="litellm/gemini/gemini-2.0-flash",
     handoffs=[
         handoff(
             agent=human_support_agent,
@@ -32,8 +30,6 @@ triage_agent = Agent(
 )
 
 def main():
-    if not os.getenv("GOOGLE_API_KEY"):
-        raise ValueError("Please set the GOOGLE_API_KEY environment variable.")
 
     Runner.run_sync(triage_agent, "My ticket is T-12345. I'm really frustrated, I've asked three times about my refund and the issue is still not solved. I need to speak to a person.")
 

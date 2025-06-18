@@ -1,8 +1,6 @@
 #
 # An iterative refinement loop using a "judge" agent.
 #
-import asyncio
-import os
 from typing import Literal
 from pydantic import BaseModel, Field
 from agents import Agent, Runner, trace, TResponseInputItem
@@ -12,14 +10,12 @@ class CodeEvaluation(BaseModel):
     feedback: str = Field(description="If the score is 'fail', provide concise, actionable feedback for how to fix the code.")
 
 def main():
-    if not os.getenv("GOOGLE_API_KEY"):
-        raise ValueError("Please set the GOOGLE_API_KEY environment variable.")
 
     # 1. The Generator Agent
     coder_agent = Agent(
         name="Python Coder",
         instructions="You are a skilled Python developer. Write a single Python function to solve the user's request. Do not write any explanations, just the code block.",
-        model="litellm/gemini/gemini-1.5-pro-latest"
+        model="litellm/gemini/gemini-2.0-flash"
     )
 
     # 2. The Judge Agent with a structured output
@@ -27,7 +23,7 @@ def main():
         name="Code Reviewer",
         instructions="You are a senior code reviewer. Evaluate the provided Python function based on the original request. Check for correctness and style. Provide a 'pass' or 'fail' score and feedback.",
         output_type=CodeEvaluation,
-        model="litellm/gemini/gemini-1.5-pro-latest"
+        model="litellm/gemini/gemini-2.0-flash"
     )
 
     # --- Orchestration Loop ---

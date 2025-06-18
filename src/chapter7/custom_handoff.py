@@ -1,17 +1,15 @@
-import asyncio
-import os
 from agents import Agent, Runner, handoff, RunContextWrapper
 
 # 1. Define the on_handoff callback
 def log_billing_transfer(ctx: RunContextWrapper) -> None:
     """This function will be called when the handoff occurs."""
-    print(f"[AUDIT LOG]: Transferring user to the billing department.")
+    print("[AUDIT LOG]: Transferring user to the billing department.")
 
 # 2. Define the target agent
 billing_agent = Agent(
     name="Billing Department",
     instructions="You help users with their billing inquiries.",
-    model="litellm/gemini/gemini-1.5-flash-latest",
+    model="litellm/gemini/gemini-2.0-flash",
     # We can add a description that the orchestrator will see
     handoff_description="Use for questions about invoices, payments, or subscriptions."
 )
@@ -28,14 +26,11 @@ custom_handoff = handoff(
 triage_agent = Agent(
     name="Triage Agent",
     instructions="You are a support router.",
-    model="litellm/gemini/gemini-1.5-flash-latest",
+    model="litellm/gemini/gemini-2.0-flash",
     handoffs=[custom_handoff]
 )
 
 def main():
-    if not os.getenv("GOOGLE_API_KEY"):
-        raise ValueError("Please set the GOOGLE_API_KEY environment variable.")
-
     Runner.run_sync(triage_agent, "I have a question about my last invoice.")
 
 if __name__ == "__main__":

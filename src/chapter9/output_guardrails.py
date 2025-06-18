@@ -1,8 +1,6 @@
 #
 # An output guardrail to check for sensitive words.
 #
-import asyncio
-import os
 from pydantic import BaseModel
 from agents import Agent, Runner, output_guardrail, GuardrailFunctionOutput, RunContextWrapper, OutputGuardrailTripwireTriggered
 
@@ -20,7 +18,7 @@ pii_checker_agent = Agent(
     name="PII Checker",
     instructions="Analyze the text. Does it contain the secret project codename 'Bluebird'?",
     output_type=PIIAnalysis,
-    model="litellm/gemini/gemini-1.5-flash-latest"
+    model="litellm/gemini/gemini-2.0-flash"
 )
 
 # 4. The output guardrail function. Note the type hint for `output`.
@@ -49,12 +47,11 @@ main_agent = Agent(
     name="Internal Comms Agent",
     instructions="You are writing an internal company update. The secret project is codenamed 'Project Bluebird'. Announce that its launch has been successful.",
     output_type=AgentResponse,
+    model="litellm/gemini/gemini-2.0-flash",
     output_guardrails=[pii_check_guardrail]
 )
 
 def main():
-    if not os.getenv("GOOGLE_API_KEY"):
-        raise ValueError("Please set the GOOGLE_API_KEY environment variable.")
 
     try:
         Runner.run_sync(main_agent, "Write the internal announcement.")

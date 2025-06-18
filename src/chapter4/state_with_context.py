@@ -1,5 +1,3 @@
-import asyncio
-import os
 from dataclasses import dataclass, field
 from agents import Agent, Runner, RunContextWrapper, function_tool
 
@@ -23,16 +21,18 @@ def add_to_cart(
 shopping_agent = Agent[UserSession](
     name="Shopping Assistant",
     instructions="Help the user with their shopping. Use your tools to manage the cart.",
-    model="litellm/gemini/gemini-1.5-flash-latest",
+    model="litellm/gemini/gemini-2.0-flash",
     tools=[add_to_cart]
 )
 
 def main():
-    # ...
     session_context = UserSession(user_id="alex-123")
-    result = Runner.run_sync(
+    Runner.run_sync(
         shopping_agent,
         "Please add a 'laptop' to my cart.",
         context=session_context
     )
     print(f"Cart contents from context: {session_context.items_in_cart}")
+
+if __name__ == "__main__":
+    main()

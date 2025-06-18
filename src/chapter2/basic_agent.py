@@ -9,7 +9,7 @@ def main():
     polite_agent = Agent(
         name="Polite Assistant",
         instructions="You are a helpful and polite assistant. You always answer in a clear and friendly tone.",
-        model="litellm/gemini/gemini-1.5-flash-latest"
+        model="litellm/gemini/gemini-2.0-flash"
     )
 
     # 2. Define the input

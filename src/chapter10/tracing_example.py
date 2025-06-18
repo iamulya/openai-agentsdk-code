@@ -1,6 +1,4 @@
-import asyncio
-import os
-from agents import Agent, Runner, function_tool, trace, RunConfig
+from agents import Agent, Runner, function_tool, RunConfig
 
 @function_tool
 def get_user_city() -> str:
@@ -9,13 +7,11 @@ def get_user_city() -> str:
     return "San Francisco"
 
 def main():
-    if not os.getenv("GOOGLE_API_KEY") or not os.getenv("OPENAI_API_KEY"):
-        raise ValueError("Please set both GOOGLE_API_KEY and OPENAI_API_KEY.")
 
     weather_agent = Agent(
         name="Weather Assistant",
         instructions="You are a helpful assistant. Use your tools to find the user's city and then tell them it's always sunny there.",
-        model="litellm/gemini/gemini-1.5-flash-latest",
+        model="litellm/gemini/gemini-2.0-flash",
         tools=[get_user_city]
     )
 

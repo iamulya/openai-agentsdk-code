@@ -6,11 +6,10 @@ def process_user_data(user_id: str, personal_note: str) -> str:
     return "Data processed successfully."
 
 def main():
-    # ... setup ...
     sensitive_agent = Agent(
         name="Processor",
         instructions="Process the data.",
-        model="litellm/gemini/gemini-1.5-flash-latest",
+        model="litellm/gemini/gemini-2.0-flash",
         tools=[process_user_data]
     )
 
@@ -27,3 +26,6 @@ def main():
         run_config=secure_run_config
     )
     print("Run complete. Check the trace to confirm data was omitted.")
+
+if __name__ == "__main__":
+    main()

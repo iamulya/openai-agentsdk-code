@@ -1,5 +1,3 @@
-import asyncio
-import os
 from agents import Agent, Runner, InputGuardrailTripwireTriggered
 from agents import input_guardrail, GuardrailFunctionOutput, RunContextWrapper, TResponseInputItem
 
@@ -13,7 +11,7 @@ class IntentClassification(BaseModel):
 guardrail_agent = Agent(
     name="Intent Classifier",
     instructions="Classify the user's request. Is it a coding-related question?",
-    model="litellm/gemini/gemini-1.5-flash-latest",
+    model="litellm/gemini/gemini-2.0-flash",
     output_type=IntentClassification
 )
 
@@ -41,14 +39,12 @@ async def topic_check_guardrail(
     )
 
 def main():
-    if not os.getenv("GOOGLE_API_KEY"):
-        raise ValueError("Please set the GOOGLE_API_KEY environment variable.")
 
     # Main agent is more powerful and specialized.
     coding_agent = Agent(
         name="Python Expert",
         instructions="You are an expert Python developer who provides concise, accurate code solutions.",
-        model="litellm/gemini/gemini-1.5-pro-latest",
+        model="litellm/gemini/gemini-2.0-flash",
         input_guardrails=[topic_check_guardrail] # Attach the guardrail
     )
 
@@ -65,7 +61,7 @@ def main():
 
     print("\n--- Test Case 2: Off-topic request ---")
     try:
-        off_topic_result = Runner.run_sync(
+        Runner.run_sync(
             coding_agent,
             "What was the main cause of the fall of the Roman Empire?"
         )

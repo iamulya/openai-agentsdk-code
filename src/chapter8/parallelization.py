@@ -2,35 +2,32 @@
 # A fan-out/fan-in pattern for parallel execution.
 #
 import asyncio
-import os
 from agents import Agent, Runner, trace
 
 async def main():
-    if not os.getenv("GOOGLE_API_KEY"):
-        raise ValueError("Please set the GOOGLE_API_KEY environment variable.")
 
     # 1. Define the parallel specialist agents (the "Fan-Out")
     optimist_agent = Agent(
         name="Optimist",
         instructions="You are an eternal optimist. You see the best in every situation and focus only on the positive outcomes.",
-        model="litellm/gemini/gemini-1.5-flash-latest"
+        model="litellm/gemini/gemini-2.0-flash"
     )
     pessimist_agent = Agent(
         name="Pessimist",
         instructions="You are a deep pessimist. You see the worst in every situation and focus only on the risks and negative outcomes.",
-        model="litellm/gemini/gemini-1.5-flash-latest"
+        model="litellm/gemini/gemini-2.0-flash"
     )
     realist_agent = Agent(
         name="Realist",
         instructions="You are a balanced realist. You weigh the pros and cons objectively.",
-        model="litellm/gemini/gemini-1.5-flash-latest"
+        model="litellm/gemini/gemini-2.0-flash"
     )
 
     # 2. Define the synthesizer agent (the "Fan-In")
     synthesizer_agent = Agent(
         name="Synthesizer",
         instructions="You have been given three perspectives on a topic: one optimistic, one pessimistic, and one realistic. Your job is to synthesize these into a single, balanced, final answer.",
-        model="litellm/gemini/gemini-1.5-pro-latest"
+        model="litellm/gemini/gemini-2.0-flash"
     )
 
     # --- Orchestration ---

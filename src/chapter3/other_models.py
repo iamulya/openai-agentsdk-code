@@ -6,7 +6,7 @@ def main():
     code_explainer_agent = Agent(
         name="Code Explainer",
         instructions="You are an expert at explaining complex code in simple terms.",
-        model="litellm/gemini/gemini-1.5-flash-latest",
+        model="litellm/gemini/gemini-2.0-flash",
         handoff_description="Use for explaining code."
     )
 
@@ -22,7 +22,7 @@ def main():
     triage_agent = Agent(
         name="Triage Agent",
         instructions="Analyze the user's request and hand off to the appropriate specialist agent.",
-        model="litellm/gemini/gemini-1.5-flash-latest",
+        model="litellm/gemini/gemini-2.0-flash",
         handoffs=[code_explainer_agent, poem_writer_agent]
     )
 

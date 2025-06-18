@@ -1,4 +1,4 @@
-from agents import Agent, function_tool, handoff
+from agents import Agent, function_tool
 from agents.extensions.visualization import draw_graph
 
 # --- Define a complex agent architecture ---
@@ -14,12 +14,14 @@ support_agent = Agent(
     name="Support Agent",
     instructions="I help with support tickets.",
     tools=[general_knowledge_qa],
+    model="litellm/gemini/gemini-2.0-flash",
     handoffs=[shipping_agent]
 )
 
 triage_agent = Agent(
     name="Triage Agent",
     instructions="I route users to the correct department.",
+    model="litellm/gemini/gemini-2.0-flash",
     handoffs=[support_agent, billing_agent]
 )
 
