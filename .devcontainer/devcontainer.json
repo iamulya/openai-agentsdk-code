@@ -1,0 +1,38 @@
+{
+    "name": "Tinib00k: OpenAI Agents SDK Book Examples",
+    "build": {
+      "dockerfile": "Dockerfile",
+      "context": "."
+    },
+  
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.defaultInterpreterPath": "/workspaces/${localWorkspaceFolderBasename}/.venv/bin/python",
+                "python.linting.pylintEnabled": true,
+                "python.linting.enabled": true,
+                "python.formatting.provider": "black",
+                "editor.formatOnSave": true,
+                "python.terminal.activateEnvironment": false // We handle activation via .bashrc
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.pylint",
+                "bierner.markdown-preview-github-styles",
+                "streetsidesoftware.code-spell-checker",
+                "njpwerner.autodocstring",
+                "charliermarsh.ruff"
+            ]
+        }
+    },
+
+    "postCreateCommand": "pipx install uv && cd /workspaces/${localWorkspaceFolderBasename} && uv venv && echo 'source /workspaces/${localWorkspaceFolderBasename}/.venv/bin/activate' >> ~/.bashrc && . .venv/bin/activate && uv pip sync uv.lock && uv pip install -e .",
+
+    "forwardPorts": [8000, 8008],
+
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+
+    "remoteUser": "vscode"
+  }
