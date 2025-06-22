@@ -2,23 +2,26 @@
 
 This repository contains the companion code examples for the book _"Building Intelligent Workflows: A Deep Dive into the OpenAI Agents SDK"_. Each chapter's folder corresponds to concepts and patterns discussed in the book.
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/iamulya/openai-agentsdk-code)
-
 ## Quickstart: Running with GitHub Codespaces (Recommended)
 
-The fastest and easiest way to run these examples is with GitHub Codespaces, which provides a fully configured cloud-based development environment right in your browser.
+This method runs a fully configured development environment in the cloud, accessible through your browser. It's the fastest way to get started.
 
-1.  **Launch Codespace**: Click the "Open in GitHub Codespaces" button above. This will create a new Codespace for this repository.
+**Prerequisites:**
+*   A GitHub account.
 
-2.  **Configure API Keys**:
+**Steps:**
+
+1.  Click the **`< > Code`** button.
+2.  Go to the **Codespaces** tab.
+3.  Click **"Create codespace on main"** (or your current branch). GitHub will prepare the environment based on the `.devcontainer/devcontainer.json` configuration, which may take a few minutes.
+
+4.  **Configure API Keys**:
     *   Once the Codespace loads, a terminal will be open at the bottom. Wait for the `postCreateCommand` to finish.
     *   The file explorer on the left will show a `.env.example` file. Rename it to `.env`.
     *   Open the new `.env` file and add your API keys.
         *   `GEMINI_API_KEY` is required for almost all examples.
         *   `OPENAI_API_KEY` is required for the SDK's tracing features.
         *   The `ANTHROPIC_API_KEY` is optional and only needed for a specific example in Chapter 3.
-
-3.  **Ready to Go!** The environment is now fully set up with all dependencies installed. You can proceed to run the examples.
 
 ## Running the Examples
 
@@ -54,7 +57,7 @@ If you prefer to work on your local machine, you can use the Dev Container featu
     -   Open the cloned repository folder in VS Code.
     -   A notification will appear at the bottom-right corner asking to "Reopen in Container". Click it.
     -   Alternatively, open the command palette (`Ctrl+Shift+P` or `Cmd+Shift+P`) and run **"Dev Containers: Reopen in Container"**.
-4.  VS Code will build the Docker container and install all dependencies. You can then run the examples as described above.
+4.  VS Code will build the Docker container and install all dependencies. You can then run the examples as described above. Make 
 
 ## Project Structure
 
