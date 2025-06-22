@@ -34,4 +34,4 @@ package-dir = {"" = "src"} # Tells setuptools that packages are under the "src" 
 
 [tool.setuptools.packages.find]
 where = ["src"]  # Location of packages relative to pyproject.toml
-include = ["building_intelligent_agents", "building_intelligent_agents.*"] # Packages to include
+include = ["tinib00k", "tinib00k.*"] # Packages to include

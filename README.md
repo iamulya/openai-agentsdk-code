@@ -71,4 +71,3 @@ Many examples use the SDK's built-in tracing. By default, traces are sent to the
 1.  Make sure your `OPENAI_API_KEY` is set in the `.env` file.
 2.  Run any example that uses tracing, for instance: `python -m chapter10.tracing_example`.
 3.  The console output will include a URL to the trace. Copy and paste this URL into your browser to see a detailed visualization of the agent's execution path, including LLM calls, tool usage, and more.
-```
